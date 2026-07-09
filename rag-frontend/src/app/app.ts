@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ConversationService } from './services/conversation.service';
 import { Sidebar } from './components/sidebar/sidebar';
 import { Upload } from './components/upload/upload';
@@ -15,4 +15,13 @@ export class App {
   private readonly conversationService = inject(ConversationService);
 
   readonly hasActiveConversation = this.conversationService.hasActiveConversation;
+  readonly sidebarOpen = signal(false);
+
+  openSidebar(): void {
+    this.sidebarOpen.set(true);
+  }
+
+  closeSidebar(): void {
+    this.sidebarOpen.set(false);
+  }
 }

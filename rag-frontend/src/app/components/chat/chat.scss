@@ -40,6 +40,18 @@
     border-radius: var(--radius);
     padding: 16px 20px;
   }
+
+  @media (max-width: 768px) {
+    min-width: 0;
+
+    &.user {
+      max-width: 85%;
+    }
+
+    &.assistant {
+      max-width: 100%;
+    }
+  }
 }
 
 .message-role {

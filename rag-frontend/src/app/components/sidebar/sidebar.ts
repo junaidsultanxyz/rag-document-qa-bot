@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter } from '@angular/core';
 import { ConversationService } from '../../services/conversation.service';
 import { ThemeService } from '../../services/theme.service';
 import { Credits } from '../credits/credits';
@@ -17,8 +17,12 @@ export class Sidebar {
   readonly conversations = this.conversationService.conversations;
   readonly activeId = this.conversationService.activeId;
 
+  @Input() isMobileOpen = false;
+  @Output() mobileClose = new EventEmitter<void>();
+
   onSelectConversation(id: string): void {
     this.conversationService.switchConversation(id);
+    this.mobileClose.emit();
   }
 
   onDeleteConversation(id: string, event: Event): void {
@@ -28,5 +32,6 @@ export class Sidebar {
 
   onNewChat(): void {
     this.conversationService.startNewChat();
+    this.mobileClose.emit();
   }
 }
