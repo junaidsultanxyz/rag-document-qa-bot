@@ -1,0 +1,16 @@
+<button class="credits-btn" (click)="open()">By Junaid Sultan</button>
+
+@if (isOpen()) {
+  <div class="modal-backdrop" (click)="onBackdropClick()">
+    <div class="modal-panel" (click)="$event.stopPropagation()">
+      <h2 class="modal-heading">Junaid Sultan</h2>
+
+      <a [href]="links.github" target="_blank" rel="noopener" class="modal-link">GitHub</a>
+      <a [href]="links.linkedin" target="_blank" rel="noopener" class="modal-link">LinkedIn</a>
+      <a [href]="links.website" target="_blank" rel="noopener" class="modal-link">Website</a>
+      <a [href]="'mailto:' + links.email" class="modal-link">Email</a>
+
+      <button class="modal-back-btn" (click)="close()">Back</button>
+    </div>
+  </div>
+}

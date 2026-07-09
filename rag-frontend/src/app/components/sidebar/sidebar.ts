@@ -1,10 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { ConversationService } from '../../services/conversation.service';
 import { ThemeService } from '../../services/theme.service';
+import { Credits } from '../credits/credits';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
+  imports: [Credits],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })
