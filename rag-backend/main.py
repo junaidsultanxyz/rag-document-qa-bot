@@ -10,12 +10,13 @@ from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 from starlette.responses import JSONResponse
 
-load_dotenv()
-
 from ingestion import extract_pages, chunk_pages
 from vectorstore import index_chunks
-from qa import answer_questions
+from qa import answer_question
 from usage_limit import check_and_increment_daily
+
+load_dotenv()
+
 
 if not os.getenv("OPENROUTER_API_KEY"):
     raise RuntimeError(
@@ -90,4 +91,4 @@ async def upload(request: Request, file: UploadFile = File(...)):
 @limiter.limit("10/hour")
 async def ask(request: Request, doc_id: str = Form(...), question: str = Form(...)):
     check_and_increment_daily()
-    return answer_questions(doc_id, question)
+    return answer_question(doc_id, question)
