@@ -1,6 +1,7 @@
 import os
 import shutil
 import uuid
+import uvicorn
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request, UploadFile, File, Form
@@ -92,3 +93,8 @@ async def upload(request: Request, file: UploadFile = File(...)):
 async def ask(request: Request, doc_id: str = Form(...), question: str = Form(...)):
     check_and_increment_daily()
     return answer_question(doc_id, question)
+
+
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
