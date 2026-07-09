@@ -1,0 +1,12 @@
+.app-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-main);
+}
+
+.main-area {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}

@@ -1,0 +1,67 @@
+<div class="chat-layout">
+  <div class="message-thread">
+    @if (conversation(); as conv) {
+      @for (msg of conv.messages; track msg.id) {
+        <div class="message-wrapper" [class.user-msg]="msg.role === 'user'">
+          <div class="message" [class.assistant]="msg.role === 'assistant'" [class.user]="msg.role === 'user'">
+            <div class="message-role">{{ msg.role === 'user' ? 'You' : 'Assistant' }}</div>
+            @if (msg.role === 'assistant') {
+              <div class="message-text markdown-body" [innerHTML]="renderMarkdown(msg.text)"></div>
+            } @else {
+              <div class="message-text">{{ msg.text }}</div>
+            }
+
+            @if (msg.sources && msg.sources.length > 0) {
+              <details class="sources">
+                <summary>Sources ({{ msg.sources.length }})</summary>
+                <div class="sources-list">
+                  @for (source of msg.sources; track source.page) {
+                    <div class="source-item">
+                      <span class="source-page">Page {{ source.page }}</span>
+                      <span class="source-snippet">{{ source.snippet }}</span>
+                    </div>
+                  }
+                </div>
+              </details>
+            }
+          </div>
+        </div>
+      }
+
+      @if (waiting()) {
+        <div class="message-wrapper">
+          <div class="message assistant">
+            <div class="message-role">Assistant</div>
+            <div class="typing-indicator">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      }
+
+      <div #scrollAnchor></div>
+    }
+  </div>
+
+  <div class="input-bar">
+    <div class="input-wrapper">
+      <input
+        type="text"
+        [(ngModel)]="question"
+        placeholder="Ask a question about the document…"
+        (keydown)="onKeydown($event)"
+        [disabled]="waiting()"
+      />
+      <button
+        class="send-btn"
+        (click)="send()"
+        [disabled]="waiting() || question().trim().length === 0"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13" />
+          <polygon points="22 2 15 22 11 13 2 9 22 2" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
