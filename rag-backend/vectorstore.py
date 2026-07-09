@@ -12,7 +12,7 @@ client = OpenAI(
     api_key=os.getenv("OPENROUTER_API_KEY"),
 )
 
-EMBEDDING_MODEL = "openai/text-embedding-3-small"
+EMBEDDING_MODEL = os.getenv("EMBED_MODEL", "openai/text-embedding-3-small")
 
 os.makedirs("./storage/chroma", exist_ok=True)
 chroma_client = chromadb.PersistentClient(path="./storage/chroma")
