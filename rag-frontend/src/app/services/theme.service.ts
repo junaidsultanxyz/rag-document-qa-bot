@@ -1,5 +1,4 @@
-import { Injectable, signal, effect, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable, signal, effect } from '@angular/core';
 
 export type Theme = 'light' | 'dark';
 
@@ -9,24 +8,22 @@ const THEME_KEY = 'rag_theme';
 export class ThemeService {
   readonly theme = signal<Theme>(this.loadTheme());
 
-  constructor(@Inject(PLATFORM_ID) platformId: object) {
-    if (isPlatformBrowser(platformId)) {
-      // Apply initial theme class immediately before first render
-      document.documentElement.classList.toggle(
-        'dark',
-        this.theme() === 'dark',
-      );
+  constructor() {
+    // Apply initial theme class immediately before first render
+    document.documentElement.classList.toggle(
+      'dark',
+      this.theme() === 'dark',
+    );
 
-      effect(() => {
-        const t = this.theme();
-        document.documentElement.classList.toggle('dark', t === 'dark');
-        try {
-          localStorage.setItem(THEME_KEY, t);
-        } catch {
-          // ignore
-        }
-      });
-    }
+    effect(() => {
+      const t = this.theme();
+      document.documentElement.classList.toggle('dark', t === 'dark');
+      try {
+        localStorage.setItem(THEME_KEY, t);
+      } catch {
+        // ignore
+      }
+    });
   }
 
   toggle(): void {

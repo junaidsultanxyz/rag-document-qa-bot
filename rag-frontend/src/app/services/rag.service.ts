@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 export interface UploadResponse {
   doc_id: string;
@@ -14,7 +15,7 @@ export interface AskResponse {
 
 @Injectable({ providedIn: 'root' })
 export class RagService {
-  private baseUrl = 'http://localhost:8000';
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
